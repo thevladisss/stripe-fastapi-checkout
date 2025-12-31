@@ -1,0 +1,76 @@
+.products-view {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-bottom: 120px;
+}
+
+.products-view h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.products-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: min(90%, 500px);
+  margin: 0 auto;
+}
+
+.products-list li {
+  margin-bottom: 0;
+}
+
+.checkout-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+  border-top: 1px solid #3a3a5a;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.checkout-bar__summary {
+  color: #a0a0b0;
+  font-size: 1rem;
+}
+
+.checkout-bar__button {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.checkout-bar__button:hover {
+  opacity: 0.9;
+}
+
+.checkout-bar__button:active {
+  transform: scale(0.98);
+}
+
