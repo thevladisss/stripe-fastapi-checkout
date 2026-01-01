@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 
 import stripe
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -12,6 +14,8 @@ load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 app = FastAPI()
+
+DIST_DIR = Path("dist")
 
 
 class CheckoutRequest(BaseModel):
@@ -35,5 +39,14 @@ async def create_checkout(request: CheckoutRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-# Mount the ui directory to serve static files (must be last - catch-all)
-app.mount("/", StaticFiles(directory="dist", html=True), name="ui")
+# Serve static assets
+app.mount("/assets", StaticFiles(directory=DIST_DIR / "assets"), name="assets")
+
+
+# SPA fallback - serve index.html for all non-API routes
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str):
+    file_path = DIST_DIR / full_path
+    if file_path.is_file():
+        return FileResponse(file_path)
+    return FileResponse(DIST_DIR / "index.html")
