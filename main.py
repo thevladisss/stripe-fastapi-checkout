@@ -12,6 +12,7 @@ from validators import validate_checkout_request
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 app = FastAPI()
 
@@ -31,8 +32,8 @@ async def create_checkout(request: CheckoutRequest):
             payment_method_types=["card"],
             line_items=line_items,
             mode="payment",
-            success_url="http://localhost:8000/success",
-            cancel_url="http://localhost:8000/products",
+            success_url=f"{BASE_URL}/success",
+            cancel_url=f"{BASE_URL}/products",
         )
         return {"checkout_url": session.url}
     except stripe.error.StripeError as e:
