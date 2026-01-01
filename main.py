@@ -1,11 +1,14 @@
 import os
+
 import stripe
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from validators import validate_checkout_request
 
+load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 app = FastAPI()
