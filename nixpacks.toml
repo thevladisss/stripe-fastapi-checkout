@@ -2,7 +2,11 @@
 # Just add Node.js for building the frontend
 
 [phases.setup]
-nixPkgs = ["nodejs"]
+nixPkgs = ["python311", "nodejs"]
+
+[phases.install]
+# Ensure pip requirements are installed since we are customizing phases
+cmds = ["pip install -r requirements.txt"]
 
 [phases.build]
 cmds = ["cd ui && npm install && npm run build"]
